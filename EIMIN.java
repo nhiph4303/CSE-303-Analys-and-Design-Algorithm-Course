@@ -22,6 +22,7 @@ public class EIMIN {
             while (!queue.isEmpty() && queue.peek() <= sum) {
                 queue.poll();
             }
+
             if (queue.isEmpty()) {
                 result[i] = 0;
             } else {
@@ -32,8 +33,9 @@ public class EIMIN {
         }
 
         for (long num : result) {
-            System.out.println(num);
+            sb.append(num + "\n");
         }
+        System.out.println(sb);
     }
 
     static class InputReader {
