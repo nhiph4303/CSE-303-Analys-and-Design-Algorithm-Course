@@ -5,26 +5,26 @@ public class EIULOVE {
     static InputReader sc = new InputReader(System.in);
 
     public static void main(String[] args) {
-        int gifts = sc.nextInt(); 
-        int money = sc.nextInt(); 
+        int gift = sc.nextInt();
+        long money = sc.nextLong();
 
-        int[] prices = new int[gifts];
-        for (int i = 0; i < gifts; i++) {
-            prices[i] = sc.nextInt(); 
-        }
-        Arrays.sort(prices); 
-
-        int indexOfPosibleGift = Arrays.binarySearch(prices, money);
-
-        if (indexOfPosibleGift < 0) {
-            indexOfPosibleGift = -(indexOfPosibleGift + 1) - 1;
+        long[] price = new long[gift];
+        for (int i = 0; i < gift; i++) {
+            price[i] = sc.nextLong();
         }
 
-     
-        if (indexOfPosibleGift < 0) {
-            System.out.println("-1"); 
+        Arrays.sort(price);
+
+        int indexOfGift = Arrays.binarySearch(price, money);
+
+        if (indexOfGift < 0) {
+            indexOfGift = -(indexOfGift + 1) - 1;
+        }
+
+        if (indexOfGift < 0) {
+            System.out.println("-1");
         } else {
-            System.out.println(prices[indexOfPosibleGift]);
+            System.out.println(price[indexOfGift]);
         }
     }
 

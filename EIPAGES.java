@@ -1,30 +1,41 @@
 import java.io.*;
 import java.util.*;
 
-public class EI2122Q1ADAM1 {
+public class EIPAGES {
     static InputReader sc = new InputReader(System.in);
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) {
         int n = sc.nextInt();
-        int x = sc.nextInt();
 
-        int[] arr = new int[n];
+        int[] pages = new int[n];
         for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
+            pages[i] = sc.nextInt();
         }
 
-        HashMap<Integer, Integer> approved = new HashMap<>();
-        int count = 0;
+        Arrays.sort(pages);
 
-        for (int num : arr) {
-            if (approved.containsKey(num-x)) {
-                count += approved.get(num-x);
+        for (int i = 0; i < n; i++) {
+            int start = pages[i];
+            int end = start;
+
+            while (i + 1 < n && pages[i + 1] == pages[i] + 1) {
+
+                end = pages[i + 1];
+
+                i++;
             }
-            approved.put(num, approved.getOrDefault(num, 0) + 1);
+
+            if (start == end) {
+                sb.append(start + " ");
+            } else if (end == start + 1) {
+                sb.append(start + " " + end + " ");
+            } else {
+                sb.append(start + "-" + end + " ");
+            }
         }
 
-        System.out.println(count);
-
+        System.out.println(sb);
     }
 
     static class InputReader {

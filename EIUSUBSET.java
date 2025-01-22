@@ -1,30 +1,35 @@
 import java.io.*;
 import java.util.*;
 
-public class EI2122Q1ADAM1 {
+public class EIUSUBSET {
     static InputReader sc = new InputReader(System.in);
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) {
         int n = sc.nextInt();
-        int x = sc.nextInt();
+        String[] subset = new String[n];
 
-        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
+            subset[i] = sc.next();
         }
 
-        HashMap<Integer, Integer> approved = new HashMap<>();
+        List<String> subSetList = new ArrayList<>();
+        subSetList.add(" ");
         int count = 0;
 
-        for (int num : arr) {
-            if (approved.containsKey(num-x)) {
-                count += approved.get(num-x);
+        for (int i = n - 1; i >= 0; i--) {
+            int currentSize = subSetList.size();
+
+            for (int j = 0; j < currentSize; j++) {
+                String newSubset = subset[i] + " " + subSetList.get(j);
+
+                subSetList.add(newSubset);
+                count++;
+                sb.append(newSubset.trim()).append("\n");
             }
-            approved.put(num, approved.getOrDefault(num, 0) + 1);
         }
 
-        System.out.println(count);
-
+        System.out.println(count + "\n" + sb.toString());
     }
 
     static class InputReader {

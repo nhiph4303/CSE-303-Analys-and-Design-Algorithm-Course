@@ -1,30 +1,59 @@
 import java.io.*;
 import java.util.*;
 
-public class EI2122Q1ADAM1 {
+public class EIEQUALS {
     static InputReader sc = new InputReader(System.in);
+    static long unmatchedValue = 0;
+    static boolean isValid = true;
 
     public static void main(String[] args) {
         int n = sc.nextInt();
-        int x = sc.nextInt();
+        int k = sc.nextInt();
 
-        int[] arr = new int[n];
+        Map<Integer, Integer> mapA = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
+            int num = sc.nextInt();
+            mapA.put(num, mapA.getOrDefault(num, 0) + 1);
         }
 
-        HashMap<Integer, Integer> approved = new HashMap<>();
-        int count = 0;
+        Map<Integer, Integer> mapB = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            int num = sc.nextInt();
+            mapB.put(num, mapB.getOrDefault(num, 0) + 1);
+        }
 
-        for (int num : arr) {
-            if (approved.containsKey(num-x)) {
-                count += approved.get(num-x);
+        int unmatchedCount = 1;
+        Set<Integer> keysB = mapB.keySet();
+
+        for (Map.Entry<Integer, Integer> entryA : mapA.entrySet()) {
+            int valueA = entryA.getKey();
+            int countA = entryA.getValue();
+
+            if (!mapB.containsKey(valueA)) {
+                if (countA > 1 || unmatchedCount < 1) {
+                    System.out.println("NO");
+                    return;
+                }
+                unmatchedValue = valueA; 
+                unmatchedCount--;
+            } else {
+                if (mapB.get(valueA).equals(countA)) {
+                    keysB.remove(valueA);
+                }
             }
-            approved.put(num, approved.getOrDefault(num, 0) + 1);
         }
 
-        System.out.println(count);
+        if (keysB.size() > 1) {
+            isValid = false;
+        } else {
+            keysB.forEach((valueB) -> {
+                if (Math.abs((long) valueB - unmatchedValue) > k) {
+                    isValid = false;
+                }
+            });
+        }
 
+        System.out.println(isValid ? "YES" : "NO");
     }
 
     static class InputReader {

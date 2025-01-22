@@ -7,12 +7,24 @@ public class EISUBARRAY {
 
     public static void main(String[] args) {
         int n = sc.nextInt();
-        int k = sc.nextInt();
-        
-        Set<Integer> num = new TreeSet<>();
-        for (int i = 0; i < n; i++) {
-            num.add(sc.nextInt());
+        int[] numbers = new int[n];
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = sc.nextInt();
         }
+
+        int positiveMaxSum = 0;
+        int negativeMaxSum = 0;
+        int max = 0;
+        int min = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            int number = numbers[i];
+            max = Math.max(number, number + max);
+            positiveMaxSum = Math.max(positiveMaxSum, max);
+            min = Math.min(number, number + min);
+            negativeMaxSum = Math.min(negativeMaxSum, min);
+        }
+        System.out.println(Math.max(positiveMaxSum, -1 * negativeMaxSum));
+
 
 
 
