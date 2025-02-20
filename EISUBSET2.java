@@ -1,21 +1,32 @@
 import java.io.*;
 import java.util.*;
 
-public class EIPAINTING {
+public class EISUBSET2 {
     static InputReader sc = new InputReader(System.in);
 
     public static void main(String[] args) {
         int n = sc.nextInt();
+        int k = sc.nextInt();
+        int[] subset = new int[n];
 
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        for (int i = 0; i < n; i++) {
-            int pics = sc.nextInt();
-            map.put(pics, map.getOrDefault(pics, 0) + 1);
+        for (int i = 0; i < subset.length; i++) {
+            subset[i] = sc.nextInt();
         }
 
-        int maxRepeat = Collections.max(map.values());
+        List<Integer> subsetList = new ArrayList<>();
+        subsetList.add(0);
+        int count = 0;
 
-        int count = n - maxRepeat;
+        for (int i = 0; i < subset.length; i++) {
+            int sizeList = subsetList.size();
+            for (int j = 0; j < sizeList; j++) {
+                int temp = subsetList.get(j) + subset[i];
+                if (temp == k) {
+                    count++;
+                }
+                subsetList.add(temp);
+            }
+        }
         System.out.println(count);
     }
 

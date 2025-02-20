@@ -6,28 +6,26 @@ public class EIQUEENS {
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Set<Integer> columnIndexs = new HashSet<>();
-        ArrayList<Integer> columns = new ArrayList<>();
+        Set<Integer> usedColumns = new HashSet<>();
+        int[] queenColumns = new int[8];
 
         for (int row = 0; row < 8; row++) {
             String input = sc.next();
-            int columnIndex = input.indexOf("*");
+            int col = input.indexOf("*");
 
-            if (columnIndex != input.lastIndexOf("*") || columnIndex == -1 || columnIndexs.contains(columnIndex)) {
+            if (col == -1 || col != input.lastIndexOf("*") || usedColumns.contains(col)) {
                 System.out.println("invalid");
                 return;
             }
 
-            columnIndexs.add(columnIndex); 
-            columns.add(columnIndex);    
+            usedColumns.add(col);
+            queenColumns[row] = col;
         }
 
-        // compare all possible pairs
-        // first queen: (i,column.get(i))
-        // second queen: (j,column.get(j))
+        // Kiểm tra đường chéo
         for (int i = 0; i < 8; i++) {
             for (int j = i + 1; j < 8; j++) {
-                if (Math.abs(columns.get(i) - columns.get(j)) == Math.abs(i - j)) {
+                if (Math.abs(queenColumns[i] - queenColumns[j]) == Math.abs(i - j)) {
                     System.out.println("invalid");
                     return;
                 }
@@ -35,7 +33,6 @@ public class EIQUEENS {
         }
 
         System.out.println("valid");
-
     }
 
     static class InputReader {

@@ -1,22 +1,37 @@
 import java.io.*;
 import java.util.*;
 
-public class EIPAINTING {
+public class EIUDEPRE {
     static InputReader sc = new InputReader(System.in);
 
     public static void main(String[] args) {
-        int n = sc.nextInt();
-
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        for (int i = 0; i < n; i++) {
-            int pics = sc.nextInt();
-            map.put(pics, map.getOrDefault(pics, 0) + 1);
+        int nYears = sc.nextInt();
+        double initialValue = sc.nextInt();
+        double residualValue = sc.nextInt();
+        double lowerBound = .0;
+        double upperBound = 1.0;
+        double temp = 0;
+        double middle = 0.0;
+        while (Double.compare(lowerBound, upperBound) < 1) {
+            middle = (upperBound + lowerBound) / 2;
+            temp = (calResult(0, nYears, middle) * initialValue);
+            if (Double.compare(temp, residualValue) == 0) {
+                break;
+            } else if (Double.compare(temp, residualValue) > 0) {
+                lowerBound = middle + 0.00000001;
+            } else {
+                upperBound = middle - 0.00000001;
+            }
         }
+        System.out.println(lowerBound);
 
-        int maxRepeat = Collections.max(map.values());
+    }
 
-        int count = n - maxRepeat;
-        System.out.println(count);
+    private static double calResult(int count, int nYears, double middle) {
+        if (count >= nYears) {
+            return 1.0;
+        }
+        return (1.0 - middle * (1.0 - ((double) count / (double) nYears))) * calResult(count + 1, nYears, middle);
     }
 
     static class InputReader {

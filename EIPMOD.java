@@ -1,22 +1,30 @@
 import java.io.*;
 import java.util.*;
 
-public class EIPAINTING {
+public class EIPMOD {
     static InputReader sc = new InputReader(System.in);
 
     public static void main(String[] args) {
-        int n = sc.nextInt();
+        long basedNumber = sc.nextInt();
+        long powNumber = sc.nextInt();
+        long modNumber = sc.nextInt();
+        System.out.println(power(basedNumber, powNumber, modNumber));
+    }
 
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        for (int i = 0; i < n; i++) {
-            int pics = sc.nextInt();
-            map.put(pics, map.getOrDefault(pics, 0) + 1);
+    static long power(long basedNumber, long powNumber, long modNumber) {
+        long result = 1;
+        basedNumber = basedNumber % modNumber;
+
+        while (powNumber > 0) {
+
+            if ((powNumber & 1) != 0) {
+                result = (result * basedNumber) % modNumber;
+            }
+
+            powNumber = powNumber >> 1;
+            basedNumber = (basedNumber *= basedNumber) % modNumber;
         }
-
-        int maxRepeat = Collections.max(map.values());
-
-        int count = n - maxRepeat;
-        System.out.println(count);
+        return result;
     }
 
     static class InputReader {

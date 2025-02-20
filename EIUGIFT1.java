@@ -5,39 +5,39 @@ public class EIUGIFT1 {
     static InputReader sc = new InputReader(System.in);
 
     public static void main(String[] args) {
-        int numberOfGifts = sc.nextInt();
-        int numberOfPapers = sc.nextInt();
+        int g = sc.nextInt();
+        int p = sc.nextInt();
 
-        int[] gifts = new int[numberOfGifts];
-        for (int i = 0; i < numberOfGifts; i++) {
+        int[] gifts = new int[g];
+        for (int i = 0; i < g; i++) {
             gifts[i] = sc.nextInt();
         }
         Arrays.sort(gifts);
 
-        int[] papers = new int[numberOfPapers];
-        for (int i = 0; i < numberOfPapers; i++) {
+        int[] papers = new int[p];
+        for (int i = 0; i < p; i++) {
             papers[i] = sc.nextInt();
         }
         Arrays.sort(papers);
 
         // 4 4
-        // 2 2 3 4
+        // 2 2 3 4 i
         // 4 4 6 8
         // 6 6 9 12
 
-        // 5 10 15 20
+        // 5 10 15 20 j
         int count = 0;
         int i = 0;
         int j = 0;
-        while (i < numberOfPapers && j < numberOfGifts) {
-            if (papers[i] >= gifts[j] * 2 && papers[i] <= gifts[j] * 3) {
+        while (i < g && j < p) {
+            if (papers[j] >= gifts[i] * 2 && papers[j] <= gifts[i] * 3) {
                 count++;
                 i++;
                 j++;
-            } else if (papers[i] < gifts[j] * 2) {
-                i++;
-            } else { // papers[i] > gifts[j] * 3
+            } else if (papers[j] < gifts[i] * 2) {
                 j++;
+            } else {
+                i++;
             }
         }
 
