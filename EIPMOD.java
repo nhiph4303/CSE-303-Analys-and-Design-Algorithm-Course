@@ -4,27 +4,26 @@ import java.util.*;
 public class EIPMOD {
     static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args) {
-        long basedNumber = sc.nextInt();
-        long powNumber = sc.nextInt();
-        long modNumber = sc.nextInt();
-        System.out.println(power(basedNumber, powNumber, modNumber));
-    }
+    public static void main(String[] args) throws IOException {
+        long x = sc.nextLong();
+        long n = sc.nextLong();
+        long k = sc.nextLong();
+        if (n == 0) {
+            System.out.println(1 % k);
+        } else {
+            long ans = 1;
+            x = x % k;
 
-    static long power(long basedNumber, long powNumber, long modNumber) {
-        long result = 1;
-        basedNumber = basedNumber % modNumber;
+            while (n > 0) {
+                if (n % 2 == 1) {
+                    ans = (ans * x) % k;
+                }
 
-        while (powNumber > 0) {
-
-            if ((powNumber & 1) != 0) {
-                result = (result * basedNumber) % modNumber;
+                n /= 2;
+                x = (x * x) % k;
             }
-
-            powNumber = powNumber >> 1;
-            basedNumber = (basedNumber *= basedNumber) % modNumber;
+            System.out.println(ans);
         }
-        return result;
     }
 
     static class InputReader {
