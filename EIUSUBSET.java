@@ -22,9 +22,9 @@ public class EIUSUBSET {
 
             for (int j = 0; j < currentSize; j++) {
                 String newSubset = subset[i] + " " + subSetList.get(j);
-
                 subSetList.add(newSubset);
                 count++;
+                
                 sb.append(newSubset.trim()).append("\n");
             }
         }
