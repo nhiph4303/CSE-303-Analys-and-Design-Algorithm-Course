@@ -21,8 +21,9 @@ public class EIUQBHV {
 
     static boolean nextPermutation() {
         int i = arr.length - 2;
-        while (i >= 0 && arr[i] >= arr[i + 1])
+        while (i >= 0 && arr[i] >= arr[i + 1]) {
             i--;
+        }
         if (i < 0) {
             return false;
         }
