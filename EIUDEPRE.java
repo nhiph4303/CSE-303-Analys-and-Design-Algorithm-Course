@@ -2,36 +2,35 @@ import java.io.*;
 import java.util.*;
 
 public class EIUDEPRE {
-    static InputReader sc = new InputReader(System.in);
+    static StringBuilder sb = new StringBuilder();
+    static InputReader rd;
 
-    public static void main(String[] args) {
-        int nYears = sc.nextInt();
-        double initialValue = sc.nextInt();
-        double residualValue = sc.nextInt();
-        double lowerBound = .0;
-        double upperBound = 1.0;
-        double temp = 0;
-        double middle = 0.0;
-        while (Double.compare(lowerBound, upperBound) < 1) {
-            middle = (upperBound + lowerBound) / 2;
-            temp = (calResult(0, nYears, middle) * initialValue);
-            if (Double.compare(temp, residualValue) == 0) {
-                break;
-            } else if (Double.compare(temp, residualValue) > 0) {
-                lowerBound = middle + 0.00000001;
-            } else {
-                upperBound = middle - 0.00000001;
-            }
-        }
-        System.out.println(lowerBound);
-
+    public static void main(String[] args) throws IOException {
+        rd = new InputReader(System.in);
+        long n = rd.nextLong();
+        double c = rd.nextDouble();
+        double r = rd.nextDouble();
+        System.out.printf("%.7f%n", findX(n, c, r));
     }
 
-    private static double calResult(int count, int nYears, double middle) {
-        if (count >= nYears) {
-            return 1.0;
+    private static double findX(long n, double c, double r) {
+        double start = 0;
+        double end = 1;
+        double temp = c;
+        while (end - start >= 0.0000001) {
+            double mid = (end + start) / 2;
+            for (int i = 0; i < n; i++) {
+                temp = temp * (1 - (mid - mid * i / n));
+            }
+            if (temp > r) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+            temp = c;
         }
-        return (1.0 - middle * (1.0 - ((double) count / (double) nYears))) * calResult(count + 1, nYears, middle);
+
+        return start;
     }
 
     static class InputReader {
