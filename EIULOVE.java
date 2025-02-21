@@ -5,27 +5,17 @@ public class EIULOVE {
     static InputReader sc = new InputReader(System.in);
 
     public static void main(String[] args) {
-        int gift = sc.nextInt();
+        int n = sc.nextInt();
         long money = sc.nextLong();
 
-        long[] price = new long[gift];
-        for (int i = 0; i < gift; i++) {
-            price[i] = sc.nextLong();
+        TreeSet<Long> prices = new TreeSet<>();
+        for (int i = 0; i < n; i++) {
+            prices.add(sc.nextLong());
         }
 
-        Arrays.sort(price);
+        Long bestGift = prices.floor(money);
+        System.out.println(bestGift == null ? "-1" : bestGift);
 
-        int indexOfGift = Arrays.binarySearch(price, money);
-
-        if (indexOfGift < 0) {
-            indexOfGift = -(indexOfGift + 1) - 1;
-        }
-
-        if (indexOfGift < 0) {
-            System.out.println("-1");
-        } else {
-            System.out.println(price[indexOfGift]);
-        }
     }
 
     static class InputReader {

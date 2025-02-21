@@ -13,18 +13,17 @@ public class EI2122Q1ADAM1 {
             arr[i] = sc.nextInt();
         }
 
-        HashMap<Integer, Integer> approved = new HashMap<>();
         int count = 0;
-
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (int num : arr) {
-            if (approved.containsKey(num-x)) {
-                count += approved.get(num-x);
+            int key = num - x;
+            if (map.containsKey(key)) {
+                count += map.get(key);
             }
-            approved.put(num, approved.getOrDefault(num, 0) + 1);
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
         System.out.println(count);
-
     }
 
     static class InputReader {
