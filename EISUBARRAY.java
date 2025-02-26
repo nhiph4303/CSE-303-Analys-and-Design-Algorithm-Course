@@ -25,9 +25,6 @@ public class EISUBARRAY {
         }
         System.out.println(Math.max(positiveMaxSum, -1 * negativeMaxSum));
 
-
-
-
     }
 
     static class InputReader {
