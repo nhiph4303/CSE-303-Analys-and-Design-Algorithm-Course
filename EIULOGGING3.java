@@ -39,7 +39,6 @@ public class EIULOGGING3 {
                     ways[i] = ways[i - 1];
                     dp[i] = dp2;
                 }
-
             }
             System.out.println(dp[n - 1] + " " + ways[n - 1] % 1_000_000_007);
         }
