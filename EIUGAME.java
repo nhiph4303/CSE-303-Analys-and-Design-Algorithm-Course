@@ -8,25 +8,19 @@ public class EIUGAME {
     public static void main(String[] args) {
         int n = sc.nextInt();
         int m = sc.nextInt();
-        long[][] a = new long[n][m];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                a[i][j] = sc.nextLong();
+        long arr[] = new long[m + 1];
+        Arrays.fill(arr, Long.MIN_VALUE / 2);
+        arr[0] = 0;
+        arr[1] = 0;
+        long temp;
+        for (int i = 1; i <= n; ++i) {
+            arr[1] += sc.nextLong();
+            for (int j = 2; j <= m; j++) {
+                temp = sc.nextLong();
+                arr[j] = Math.max(arr[j], arr[j - 1]) + temp;
             }
         }
-        for (int i = 1; i < m; i++) {
-            a[0][i] += a[0][i - 1];
-        }
-        for (int i = 1; i < n; i++) {
-            a[i][0] += a[i - 1][0];
-        }
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                a[i][j] = Math.max(a[i][j] + a[i - 1][j], a[i][j] + a[i][j - 1]);
-            }
-        }
-        System.out.println(a[n - 1][m - 1]);
+        System.out.println(arr[m]);
     }
 
     static class InputReader {

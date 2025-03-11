@@ -4,32 +4,30 @@ import java.util.*;
 public class EIJUMP {
     static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int n = sc.nextInt();
-        int[][] a = new int[2][n];
-        Map<Integer, Queue<Integer>> map = new HashMap<>();
-
-        for (int i = 0; i < n; i++) {
-            a[0][i] = sc.nextInt();
-            a[1][i] = Integer.MAX_VALUE;
-            Queue<Integer> tempQueue = map.getOrDefault(a[0][i], new ArrayDeque<>());
-            tempQueue.add(i);
-            map.put(a[0][i], tempQueue);
+        int[] stones = new int[n];
+        for (int i = 0; i < stones.length; i++) {
+            stones[i] = sc.nextInt();
         }
 
-        a[1][0] = 0;
-        int size = n - 1;
-        for (int i = 0; i < size; i++) {
-            Queue<Integer> tempQueue = map.get(a[0][i]);
-            a[1][i + 1] = Math.min(a[1][i + 1], 1 + a[1][i]);
-            if (tempQueue.size() >= 2) {
-                tempQueue.poll();
-                int index = tempQueue.peek();
-                a[1][index] = Math.min(a[1][index], 1 + a[1][i]);
+        int[] temp = new int[n + 1];
+        temp[0] = -1;
+        Map<Integer, Integer> stoneIndex = new HashMap<>();
+        
+        for (int i = 1; i < temp.length; i++) {
+            int theStone = stones[i - 1];
+            if (stoneIndex.containsKey(theStone) == false) {
+                temp[i] = temp[i - 1] + 1;
+                stoneIndex.put(theStone, i);
+            } else {
+                int prevSteps = temp[stoneIndex.get(theStone)];
+                temp[i] = Math.min(temp[i - 1], prevSteps);
+                temp[i] += 1;
+                stoneIndex.put(theStone, i);
             }
         }
-
-        System.out.println(a[1][n - 1]);
+        System.out.println(temp[n]);
 
     }
 

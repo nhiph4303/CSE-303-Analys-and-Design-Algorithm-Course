@@ -7,37 +7,41 @@ public class EIULOGGING3 {
 
     public static void main(String[] args) {
         int n = sc.nextInt();
-        long[] a = new long[n + 1];
-        for (int i = 1; i <= n; i++) {
-            a[i] = sc.nextLong();
+
+        long[] k = new long[n];
+        for (int i = 0; i < n; i++) {
+            k[i] = sc.nextLong();
         }
-        long[][] dp = new long[2][n + 1];
+        long[] dp = new long[n];
+        long[] ways = new long[n];
+        ways[0] = 1;
+
         if (n == 1) {
-            System.out.println((a[1] <= 0 ? 0 : a[1]) + " " + 1);
+            System.out.println(Math.max(0, k[0]) + " 1");
         } else {
+            ways[1] = 1;
+            dp[0] = Math.max(0, k[0]);
+            if (dp[0] == k[1]) {
+                ways[1] = 2;
+            }
+            dp[1] = Math.max(dp[0], k[1]);
 
-            dp[0][0] = 0;
-            dp[0][1] = Math.max(a[1], dp[0][0]);
-            dp[1][1] = 1;
-            dp[1][0] = 1;
-            for (int i = 2; i <= n; i++) {
-                long tempSum = a[i] + dp[0][i - 2];
-                if (tempSum > dp[0][i - 1]) {
-                    dp[1][i] = dp[1][i - 2];
-                    dp[0][i] = tempSum;
-                } else if (tempSum == dp[0][i - 1]) {
-                    dp[0][i] = tempSum;
-
-                    dp[1][i] = (dp[1][i - 2] + dp[1][i - 1]) % 1000000007;
-
+            for (int i = 2; i < dp.length; i++) {
+                long dp1 = dp[i - 2] + k[i];
+                long dp2 = dp[i - 1];
+                if (dp1 == dp2) {
+                    ways[i] = (ways[i - 2] + ways[i - 1]) % 1_000_000_007;
+                    dp[i] = dp1;
+                } else if (dp1 > dp2) {
+                    ways[i] = ways[i - 2];
+                    dp[i] = dp1;
                 } else {
-                    dp[1][i] = dp[1][i - 1];
-                    dp[0][i] = dp[0][i - 1];
+                    ways[i] = ways[i - 1];
+                    dp[i] = dp2;
                 }
 
             }
-            System.out.println(dp[0][n] + " " + dp[1][n]);
-
+            System.out.println(dp[n - 1] + " " + ways[n - 1] % 1_000_000_007);
         }
     }
 
