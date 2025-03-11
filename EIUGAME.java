@@ -1,37 +1,32 @@
 import java.io.*;
 import java.util.*;
 
-public class EIDIVIDE {
+public class EIUGAME {
     static StringBuilder sb = new StringBuilder();
     static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args) throws IOException {
-        long n = sc.nextLong();
-        long left = sc.nextLong();
-        long right = sc.nextLong();
+    public static void main(String[] args) {
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        long[][] a = new long[n][m];
 
-        long maxLength = (long) (Math.log(n) / Math.log(2));
-        if (Math.pow(2, maxLength) > n) {
-            maxLength--;
-        }
-        long ans = 0;
-        while (maxLength >= 0) {
-            if (n % 2 == 1) {
-                ans += check(maxLength, left, right);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                a[i][j] = sc.nextLong();
             }
-            maxLength--;
-            n /= 2;
         }
-        System.out.println(ans);
-    }
-
-    static long check(long level, long left, long right) {
-        long maxLeft = (long) Math.ceil((left - Math.pow(2, level)) / Math.pow(2, level + 1));
-        long maxRight = (long) Math.floor((right - Math.pow(2, level)) / Math.pow(2, level + 1));
-        if (maxLeft > maxRight) {
-            return 0;
-        } 
-        return maxRight - maxLeft + 1;
+        for (int i = 1; i < m; i++) {
+            a[0][i] += a[0][i - 1];
+        }
+        for (int i = 1; i < n; i++) {
+            a[i][0] += a[i - 1][0];
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                a[i][j] = Math.max(a[i][j] + a[i - 1][j], a[i][j] + a[i][j - 1]);
+            }
+        }
+        System.out.println(a[n - 1][m - 1]);
     }
 
     static class InputReader {

@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+ 
 public class EISUBSET2 {
     static InputReader sc = new InputReader(System.in);
 

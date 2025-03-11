@@ -1,37 +1,44 @@
 import java.io.*;
 import java.util.*;
 
-public class EIDIVIDE {
-    static StringBuilder sb = new StringBuilder();
+public class EIULOGGING3 {
     static InputReader sc = new InputReader(System.in);
+    static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
-        long n = sc.nextLong();
-        long left = sc.nextLong();
-        long right = sc.nextLong();
-
-        long maxLength = (long) (Math.log(n) / Math.log(2));
-        if (Math.pow(2, maxLength) > n) {
-            maxLength--;
+    public static void main(String[] args) {
+        int n = sc.nextInt();
+        long[] a = new long[n + 1];
+        for (int i = 1; i <= n; i++) {
+            a[i] = sc.nextLong();
         }
-        long ans = 0;
-        while (maxLength >= 0) {
-            if (n % 2 == 1) {
-                ans += check(maxLength, left, right);
+        long[][] dp = new long[2][n + 1];
+        if (n == 1) {
+            System.out.println((a[1] <= 0 ? 0 : a[1]) + " " + 1);
+        } else {
+
+            dp[0][0] = 0;
+            dp[0][1] = Math.max(a[1], dp[0][0]);
+            dp[1][1] = 1;
+            dp[1][0] = 1;
+            for (int i = 2; i <= n; i++) {
+                long tempSum = a[i] + dp[0][i - 2];
+                if (tempSum > dp[0][i - 1]) {
+                    dp[1][i] = dp[1][i - 2];
+                    dp[0][i] = tempSum;
+                } else if (tempSum == dp[0][i - 1]) {
+                    dp[0][i] = tempSum;
+
+                    dp[1][i] = (dp[1][i - 2] + dp[1][i - 1]) % 1000000007;
+
+                } else {
+                    dp[1][i] = dp[1][i - 1];
+                    dp[0][i] = dp[0][i - 1];
+                }
+
             }
-            maxLength--;
-            n /= 2;
-        }
-        System.out.println(ans);
-    }
+            System.out.println(dp[0][n] + " " + dp[1][n]);
 
-    static long check(long level, long left, long right) {
-        long maxLeft = (long) Math.ceil((left - Math.pow(2, level)) / Math.pow(2, level + 1));
-        long maxRight = (long) Math.floor((right - Math.pow(2, level)) / Math.pow(2, level + 1));
-        if (maxLeft > maxRight) {
-            return 0;
-        } 
-        return maxRight - maxLeft + 1;
+        }
     }
 
     static class InputReader {

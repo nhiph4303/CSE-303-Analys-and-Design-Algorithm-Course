@@ -1,37 +1,36 @@
 import java.io.*;
 import java.util.*;
 
-public class EIDIVIDE {
-    static StringBuilder sb = new StringBuilder();
+public class EIJUMP {
     static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args) throws IOException {
-        long n = sc.nextLong();
-        long left = sc.nextLong();
-        long right = sc.nextLong();
+    public static void main(String[] args){
+        int n = sc.nextInt();
+        int[][] a = new int[2][n];
+        Map<Integer, Queue<Integer>> map = new HashMap<>();
 
-        long maxLength = (long) (Math.log(n) / Math.log(2));
-        if (Math.pow(2, maxLength) > n) {
-            maxLength--;
+        for (int i = 0; i < n; i++) {
+            a[0][i] = sc.nextInt();
+            a[1][i] = Integer.MAX_VALUE;
+            Queue<Integer> tempQueue = map.getOrDefault(a[0][i], new ArrayDeque<>());
+            tempQueue.add(i);
+            map.put(a[0][i], tempQueue);
         }
-        long ans = 0;
-        while (maxLength >= 0) {
-            if (n % 2 == 1) {
-                ans += check(maxLength, left, right);
+
+        a[1][0] = 0;
+        int size = n - 1;
+        for (int i = 0; i < size; i++) {
+            Queue<Integer> tempQueue = map.get(a[0][i]);
+            a[1][i + 1] = Math.min(a[1][i + 1], 1 + a[1][i]);
+            if (tempQueue.size() >= 2) {
+                tempQueue.poll();
+                int index = tempQueue.peek();
+                a[1][index] = Math.min(a[1][index], 1 + a[1][i]);
             }
-            maxLength--;
-            n /= 2;
         }
-        System.out.println(ans);
-    }
 
-    static long check(long level, long left, long right) {
-        long maxLeft = (long) Math.ceil((left - Math.pow(2, level)) / Math.pow(2, level + 1));
-        long maxRight = (long) Math.floor((right - Math.pow(2, level)) / Math.pow(2, level + 1));
-        if (maxLeft > maxRight) {
-            return 0;
-        } 
-        return maxRight - maxLeft + 1;
+        System.out.println(a[1][n - 1]);
+
     }
 
     static class InputReader {

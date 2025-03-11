@@ -3,57 +3,45 @@ import java.util.*;
 
 public class EIEQUALS {
     static InputReader sc = new InputReader(System.in);
-    static long unmatchedValue = 0;
-    static boolean isValid = true;
 
     public static void main(String[] args) {
         int n = sc.nextInt();
         int k = sc.nextInt();
-
-        Map<Integer, Integer> mapA = new HashMap<>();
+        int[] a = new int[n];
+        int[] b = new int[n];
         for (int i = 0; i < n; i++) {
-            int num = sc.nextInt();
-            mapA.put(num, mapA.getOrDefault(num, 0) + 1);
+            a[i] = sc.nextInt();
         }
-
-        Map<Integer, Integer> mapB = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            int num = sc.nextInt();
-            mapB.put(num, mapB.getOrDefault(num, 0) + 1);
+            b[i] = sc.nextInt();
         }
-
-        int unmatchedCount = 1;
-        Set<Integer> keysB = mapB.keySet();
-
-        for (Map.Entry<Integer, Integer> entryA : mapA.entrySet()) {
-            int valueA = entryA.getKey();
-            int countA = entryA.getValue();
-
-            if (!mapB.containsKey(valueA)) {
-                if (countA > 1 || unmatchedCount < 1) {
-                    System.out.println("NO");
-                    return;
-                }
-                unmatchedValue = valueA; 
-                unmatchedCount--;
+        Arrays.sort(a);
+        Arrays.sort(b);
+        int indexA = 0;
+        int indexB = 0;
+        int count = 0;
+        while (indexA < n && indexB < n) {
+            if (a[indexA] == b[indexB]) {
+                indexA++;
+                indexB++;
             } else {
-                if (mapB.get(valueA).equals(countA)) {
-                    keysB.remove(valueA);
+                count++;
+                if (a[indexA] > b[indexB]) {
+                    indexB++;
+                } else {
+                    indexA++;
                 }
             }
         }
-
-        if (keysB.size() > 1) {
-            isValid = false;
-        } else {
-            keysB.forEach((valueB) -> {
-                if (Math.abs((long) valueB - unmatchedValue) > k) {
-                    isValid = false;
-                }
-            });
+        if (count > 2) {
+            System.out.println("NO");
+            return;
         }
-
-        System.out.println(isValid ? "YES" : "NO");
+        long sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += Math.abs(a[i] - b[i]);
+        }
+        System.out.println(sum > k ? "NO" : "YES");
     }
 
     static class InputReader {

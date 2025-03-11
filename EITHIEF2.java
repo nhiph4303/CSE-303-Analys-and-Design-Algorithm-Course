@@ -1,37 +1,32 @@
 import java.io.*;
 import java.util.*;
 
-public class EIDIVIDE {
+public class EITHIEF2 {
     static StringBuilder sb = new StringBuilder();
     static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args) throws IOException {
-        long n = sc.nextLong();
-        long left = sc.nextLong();
-        long right = sc.nextLong();
-
-        long maxLength = (long) (Math.log(n) / Math.log(2));
-        if (Math.pow(2, maxLength) > n) {
-            maxLength--;
+    public static void main(String[] args) {
+        int n = sc.nextInt();
+        int p = sc.nextInt();
+        long[] dp = new long[p + 1];
+        Arrays.fill(dp, Integer.MIN_VALUE);
+        int[] weight = new int[n];
+        int[] price = new int[n];
+        for (int i = 0; i < n; i++) {
+            weight[i] = sc.nextInt();
+            price[i] = sc.nextInt();
         }
-        long ans = 0;
-        while (maxLength >= 0) {
-            if (n % 2 == 1) {
-                ans += check(maxLength, left, right);
+        dp[0] = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = p; j >= weight[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - weight[i]] + price[i]);
             }
-            maxLength--;
-            n /= 2;
         }
-        System.out.println(ans);
-    }
-
-    static long check(long level, long left, long right) {
-        long maxLeft = (long) Math.ceil((left - Math.pow(2, level)) / Math.pow(2, level + 1));
-        long maxRight = (long) Math.floor((right - Math.pow(2, level)) / Math.pow(2, level + 1));
-        if (maxLeft > maxRight) {
-            return 0;
-        } 
-        return maxRight - maxLeft + 1;
+        long max = -1;
+        for (long num : dp) {
+            max = Math.max(max, num);
+        }
+        System.out.println(max);
     }
 
     static class InputReader {

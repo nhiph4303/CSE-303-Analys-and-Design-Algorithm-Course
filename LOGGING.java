@@ -1,37 +1,30 @@
 import java.io.*;
 import java.util.*;
 
-public class EIDIVIDE {
-    static StringBuilder sb = new StringBuilder();
+public class LOGGING {
     static InputReader sc = new InputReader(System.in);
+    static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
-        long n = sc.nextLong();
-        long left = sc.nextLong();
-        long right = sc.nextLong();
+    public static void main(String[] args) {
+        int n = sc.nextInt();
 
-        long maxLength = (long) (Math.log(n) / Math.log(2));
-        if (Math.pow(2, maxLength) > n) {
-            maxLength--;
+        long[] k = new long[n];
+        for (int i = 0; i < n; i++) {
+            k[i] = sc.nextLong();
         }
-        long ans = 0;
-        while (maxLength >= 0) {
-            if (n % 2 == 1) {
-                ans += check(maxLength, left, right);
-            }
-            maxLength--;
-            n /= 2;
-        }
-        System.out.println(ans);
+        System.out.print(maxValue(n, k));
     }
 
-    static long check(long level, long left, long right) {
-        long maxLeft = (long) Math.ceil((left - Math.pow(2, level)) / Math.pow(2, level + 1));
-        long maxRight = (long) Math.floor((right - Math.pow(2, level)) / Math.pow(2, level + 1));
-        if (maxLeft > maxRight) {
-            return 0;
-        } 
-        return maxRight - maxLeft + 1;
+    static long maxValue(int n, long[] k) {
+        long[] dp = new long[n + 1];
+        dp[0] = 0;
+        dp[1] = Math.max(k[0], 0);
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = Math.max(dp[i - 2] + k[i - 1], dp[i - 1]);
+        }
+
+        return dp[n];
     }
 
     static class InputReader {

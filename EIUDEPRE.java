@@ -3,13 +3,12 @@ import java.util.*;
 
 public class EIUDEPRE {
     static StringBuilder sb = new StringBuilder();
-    static InputReader rd;
+    static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args) throws IOException {
-        rd = new InputReader(System.in);
-        long n = rd.nextLong();
-        double c = rd.nextDouble();
-        double r = rd.nextDouble();
+    public static void main(String[] args) {
+        long n = sc.nextLong();
+        double c = sc.nextDouble();
+        double r = sc.nextDouble();
         System.out.printf("%.7f%n", findX(n, c, r));
     }
 
