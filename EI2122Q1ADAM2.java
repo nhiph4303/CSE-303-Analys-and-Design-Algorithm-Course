@@ -6,61 +6,61 @@ public class EI2122Q1ADAM2 {
 
     static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args) {
-        int nMen = sc.nextInt();
-        int nWomen = sc.nextInt();
-        int nPairs = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int x = sc.nextInt();
 
-        double[] menHeights = getHeight(nMen);
-        double[] womenHeights = getHeight(nWomen);
+        int[] males = new int[n];
+        for (int i = 0; i < n; i++) {
+            males[i] = sc.nextInt();
+        }
+        Arrays.sort(males);
 
-        Arrays.sort(menHeights);
-        Arrays.sort(womenHeights);
+        int[] females = new int[m];
+        for (int i = 0; i < m; i++) {
+            females[i] = sc.nextInt();
+        }
+        Arrays.sort(females);
 
-        double minDiff = 0;
-        double maxDiff = Math.max(menHeights[nMen - 1], womenHeights[nWomen - 1])
-                - Math.min(menHeights[0], womenHeights[0]);
+        int minH = binarySearch(males, females, x);
+        System.out.println(minH);
+    }
 
-        while (Double.compare(minDiff, maxDiff) <= 0) {
-            double middle = (maxDiff + minDiff) / 2;
-
-            if (canFormPairs(menHeights, womenHeights, nPairs, middle)) {
-                maxDiff = middle - 1e-9;
+    static int binarySearch(int[] males, int[] females, int x) {
+        int minH = Math.max(males[males.length - 1], females[females.length - 1]) - Math.min(males[0], females[0]);
+        int left = 0;
+        int right = minH;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (countPairs(males, females, mid, x)) {
+                minH = mid;
+                right = mid - 1;
             } else {
-                minDiff = middle + 1e-9;
+                left = mid + 1;
             }
         }
-
-        System.out.printf("%.0f%n", minDiff);
+        return minH;
     }
 
-    static double[] getHeight(int n) {
-        double[] heights = new double[n];
-        for (int i = 0; i < n; i++) {
-            heights[i] = sc.nextDouble();
-        }
-        return heights;
-    }
-
-    static boolean canFormPairs(double[] menHeights, double[] womenHeights, int nPairs, double maxDiff) {
-        int i = 0, j = 0, count = 0;
-
-        while (i < menHeights.length && j < womenHeights.length) {
-            if (Math.abs(menHeights[i] - womenHeights[j]) <= maxDiff) {
+    static boolean countPairs(int[] males, int[] females, int h, int x) {
+        int i = 0;
+        int j = 0;
+        int count = 0;
+        while (i < males.length && j < females.length) {
+            if (Math.abs(males[i] - females[j]) <= h) {
                 count++;
                 i++;
                 j++;
-            } else if (menHeights[i] < womenHeights[j]) {
-                i++;
             } else {
-                j++;
+                if (males[i] < females[j]) {
+                    i++;
+                } else {
+                    j++;
+                }
             }
-
-            if (count >= nPairs)
-                return true;
         }
-
-        return count >= nPairs;
+        return count >= x;
     }
 
     static class InputReader {

@@ -6,29 +6,28 @@ public class EIJUMP {
 
     public static void main(String[] args) {
         int n = sc.nextInt();
-        int[] stones = new int[n];
-        for (int i = 0; i < stones.length; i++) {
-            stones[i] = sc.nextInt();
+
+        int[] c = new int[n];
+        for (int i = 0; i < n; i++) {
+            c[i] = sc.nextInt();
         }
 
-        int[] steps = new int[n + 1];
-        steps[0] = -1;
-        Map<Integer, Integer> stoneIndex = new HashMap<>();
+        int[] dp = new int[n];
+        for (int i = 0; i < n; i++) {
+            dp[i] = Integer.MAX_VALUE;
+        }
         
-        for (int i = 1; i < steps.length; i++) {
-            int theStone = stones[i - 1];
-            if (stoneIndex.containsKey(theStone) == false) {
-                steps[i] = steps[i - 1] + 1;
-                stoneIndex.put(theStone, i);
-            } else {
-                int prevSteps = steps[stoneIndex.get(theStone)];
-                steps[i] = Math.min(steps[i - 1], prevSteps);
-                steps[i] += 1;
-                stoneIndex.put(theStone, i);
+        dp[0] = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(c[0], 0);
+        for (int i = 1; i < n; i++) {
+            dp[i] = dp[i - 1] + 1;
+            if (map.containsKey(c[i])) {
+                dp[i] = Math.min(dp[i], map.get(c[i]) + 1);
             }
+            map.put(c[i], dp[i]);
         }
-        System.out.println(steps[n]);
-
+        System.out.println(dp[n - 1]);
     }
 
     static class InputReader {
