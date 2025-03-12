@@ -11,23 +11,23 @@ public class EIJUMP {
             stones[i] = sc.nextInt();
         }
 
-        int[] temp = new int[n + 1];
-        temp[0] = -1;
+        int[] steps = new int[n + 1];
+        steps[0] = -1;
         Map<Integer, Integer> stoneIndex = new HashMap<>();
         
-        for (int i = 1; i < temp.length; i++) {
+        for (int i = 1; i < steps.length; i++) {
             int theStone = stones[i - 1];
             if (stoneIndex.containsKey(theStone) == false) {
-                temp[i] = temp[i - 1] + 1;
+                steps[i] = steps[i - 1] + 1;
                 stoneIndex.put(theStone, i);
             } else {
-                int prevSteps = temp[stoneIndex.get(theStone)];
-                temp[i] = Math.min(temp[i - 1], prevSteps);
-                temp[i] += 1;
+                int prevSteps = steps[stoneIndex.get(theStone)];
+                steps[i] = Math.min(steps[i - 1], prevSteps);
+                steps[i] += 1;
                 stoneIndex.put(theStone, i);
             }
         }
-        System.out.println(temp[n]);
+        System.out.println(steps[n]);
 
     }
 
