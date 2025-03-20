@@ -1,49 +1,27 @@
 import java.io.*;
 import java.util.*;
 
-public class EIUGIFT1for {
+public class EIBORE {
+    static StringBuilder sb = new StringBuilder();
     static InputReader sc = new InputReader(System.in);
 
     public static void main(String[] args) {
-        int numberOfGifts = sc.nextInt();
-        int numberOfPapers = sc.nextInt();
-
-        int[] gifts = new int[numberOfGifts];
-        for (int i = 0; i < numberOfGifts; i++) {
-            gifts[i] = sc.nextInt();
+        int n = sc.nextInt();
+        long[] arr = new long[100001];
+        for (int i = 0; i < n; i++) {
+            int num = sc.nextInt();
+            arr[num] += num;
         }
-        Arrays.sort(gifts);
-
-        int[] papers = new int[numberOfPapers];
-        for (int i = 0; i < numberOfPapers; i++) {
-            papers[i] = sc.nextInt();
-        }
-        Arrays.sort(papers);
-
-        // 4 4
-        // 2 2 3 4
-        // 4 4 6 8
-        // 6 6 9 12
-
-        // 5 10 15 20
-        int count = 0;
-        int j = 0;
-
-        for (int i = 0; i < numberOfPapers; i++) {
-            for (; j < numberOfGifts;) {
-                if (papers[i] >= gifts[j] * 2 && papers[i] <= gifts[j] * 3) {
-                    count++;
-                    j++;
-                    break;
-                } else if (papers[i] < gifts[j] * 2) {
-                    break;
-                } else {
-                    j++;
-                }
+        long max = 0;
+        for (int i = 2; i <= 100000; i++) {
+            if (i >= 3) {
+                arr[i] = Math.max(arr[i] + arr[i - 3], arr[i] + arr[i - 2]);
+            } else {
+                arr[i] += arr[i - 2];
             }
+            max = Math.max(max, arr[i]);
         }
-
-        System.out.println(count);
+        System.out.println(max);
     }
 
     static class InputReader {
@@ -125,5 +103,4 @@ public class EIUGIFT1for {
         }
 
     }
-
 }

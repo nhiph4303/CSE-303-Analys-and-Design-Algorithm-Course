@@ -1,50 +1,28 @@
 import java.io.*;
 import java.util.*;
 
-public class EIUGAME2 {
-    static InputReader sc = new InputReader(System.in);
+public class EISTORE {
     static StringBuilder sb = new StringBuilder();
+    static InputReader sc = new InputReader(System.in);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int n = sc.nextInt();
         int m = sc.nextInt();
-
-        long[][] a = new long[n][m];
-        long[][] countSteps = new long[n][m];
-
+        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                a[i][j] = sc.nextLong();
-                countSteps[i][j] = 1;
-            }
+            arr[i] = sc.nextInt();
         }
-
-        for (int i = 1; i < n; i++) {
-            a[i][0] += a[i - 1][0];
-        }
-        
-        for (int i = 1; i < m; i++) {
-            a[0][i] += a[0][i - 1];
-        }
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                long up = a[i][j] + a[i - 1][j];
-                long left = a[i][j] + a[i][j - 1];
-
-                if (up > left) {
-                    a[i][j] = up;
-                    countSteps[i][j] = countSteps[i - 1][j] % 10000000;
-                } else if (up < left) {
-                    a[i][j] = left;
-                    countSteps[i][j] = countSteps[i][j - 1] % 10000000;
-                } else {
-                    a[i][j] = up;
-                    countSteps[i][j] = (countSteps[i - 1][j] + countSteps[i][j - 1]) % 10000000;
+        int[] dp = new int[m + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int num : arr) {
+            for (int j = num; j <= m; j++) {
+                if (dp[j - num] != Integer.MAX_VALUE) {
+                    dp[j] = Math.min(dp[j], dp[j - num] + 1);
                 }
             }
         }
-        System.out.println(a[n - 1][m - 1] + " " + countSteps[n - 1][m - 1]);
-
+        System.out.println(dp[m]);
     }
 
     static class InputReader {

@@ -12,6 +12,7 @@ public class EIULOGGING3 {
         for (int i = 0; i < n; i++) {
             k[i] = sc.nextLong();
         }
+        
         long[] dp = new long[n];
         long[] ways = new long[n];
         ways[0] = 1;

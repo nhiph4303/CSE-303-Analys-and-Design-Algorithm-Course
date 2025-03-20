@@ -1,32 +1,66 @@
 import java.io.*;
 import java.util.*;
 
-public class EIUQBHV {
-    static InputReader sc = new InputReader(System.in);
+public class EIUCOL {
     static StringBuilder sb = new StringBuilder();
+    static InputReader sc = new InputReader(System.in);
+    static int[][] attack;
+    static int[][] beingAttacked;
+    static int n;
 
     public static void main(String[] args) {
-        String n = sc.next();
-        TreeSet<String> tree1 = new TreeSet<>();
-        tree1.add("");
-
-        for (int i = 0; i < n.length(); i++) {
-            TreeSet<String> tree2 = new TreeSet<>();
-
-            for (String t : tree1) {
-                for (int j = 0; j <= t.length(); j++) {
-                    String newLine = t.substring(0, j) + n.charAt(i) + t.substring(j);
-                    tree2.add(newLine);
+        int money = sc.nextInt();
+        int[] arr = new int[3];
+        for (int i = 0; i < 3; i++) {
+            arr[i] = sc.nextInt();
+        }
+        int[] dp = new int[money + 1];
+        Arrays.fill(dp, Integer.MIN_VALUE);
+        dp[0] = 0;
+        for (int num : arr) {
+            for (int i = num; i <= money; i++) {
+                if (dp[i - num] != Integer.MIN_VALUE) {
+                    dp[i] = Math.max(dp[i], dp[i - num] + 1);
                 }
             }
-            tree1 = tree2;
+        }
+        System.out.println(dp[money]);
+    }
+
+    static class Pair {
+        int x;
+        int y;
+        int type;
+
+        public Pair(int x, int y, int type) {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+        }
+    }
+
+    static class Horse {
+        int[] dx = { -2, -1, 1, 2, 2, 1, -1, -2 };
+        int[] dy = { 1, 2, 2, 1, -1, -2, -2, -1 };
+        int horseX;
+        int horseY;
+
+        public Horse(int horseX, int horseY) {
+            this.horseX = horseX;
+            this.horseY = horseY;
         }
 
-        sb.append(tree1.size()).append("\n");
-        tree1.forEach((key) -> {
-            sb.append(key).append("\n");
-        });
-        System.out.println(sb);
+        public void runHorse(int x, int y) {
+            for (int i = 0; i < dx.length; i++) {
+                int nextX = x + dx[i];
+                int nextY = y + dy[i];
+                if (nextX >= 1 && nextX <= n && nextY >= 1 && nextY <= n) {
+                    attack[nextX][nextY]++;
+                    runHorse(nextX, nextY);
+                }
+            }
+        }
+
     }
 
     static class InputReader {
@@ -108,4 +142,5 @@ public class EIUQBHV {
         }
 
     }
+
 }
