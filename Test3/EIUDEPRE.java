@@ -1,6 +1,6 @@
 package Test3;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class EIUDEPRE {
     static Scanner sc = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class EIUDEPRE {
         double temp = c;
 
         while (end - start >= 0.0000001) {
-            double mid = (end + start) / 2;
+            double mid = (start + end) / 2;
 
             for (int i = 0; i < n; i++) {
                 temp = temp * (1 - (mid - mid * i / n));

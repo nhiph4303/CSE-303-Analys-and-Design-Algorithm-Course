@@ -19,12 +19,11 @@ public class EIUQBHV {
                     tree2.add(t.substring(0, j) + n.charAt(i) + t.substring(j));
                 }
             }
-
             tree1 = tree2;
         }
 
-        for (String s : tree1) {
-            sb.append(s + "\n");
+        for (String t : tree1) {
+            sb.append(t + "\n");
         }
 
         System.out.println(tree1.size() + "\n" + sb);
