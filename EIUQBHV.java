@@ -13,22 +13,19 @@ public class EIUQBHV {
         for (int i = 0; i < n.length(); i++) {
             TreeSet<String> tree2 = new TreeSet<>();
 
-            for (String t : tree1) {
-                for (int j = 0; j <= t.length(); j++) {
-                    String newLine = t.substring(0, j) + n.charAt(i) + t.substring(j);
-                    tree2.add(newLine);
+            for (String s : tree1) {
+                for (int j = 0; j <= s.length(); j++) {
+                    tree2.add(s.substring(0, j) + n.charAt(i) + s.substring(j));
                 }
+                tree1 = tree2;
             }
-            tree1 = tree2;
         }
 
-        sb.append(tree1.size()).append("\n");
-        tree1.forEach((key) -> {
-            sb.append(key).append("\n");
-        });
-        System.out.println(sb);
+        for (String s : tree1) {
+            sb.append(s + "\n");
+        }
+        System.out.println(tree1.size() + "\n" + sb);
     }
-
     static class InputReader {
 
         StringTokenizer tokenizer;
