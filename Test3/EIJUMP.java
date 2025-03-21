@@ -18,7 +18,6 @@ public class EIJUMP {
         for (int i = 0; i < n; i++) {
             dp[i] = Integer.MAX_VALUE;
         }
-
         dp[0] = 0;
 
         Map<Integer, Integer> map = new HashMap<>();
