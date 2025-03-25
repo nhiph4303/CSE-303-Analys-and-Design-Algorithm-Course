@@ -25,10 +25,13 @@ public class EIMIN {
             result.add(num - prev);
             prev = num;
         }
-
-        if (result.size() < k) {
-            result.add(0L);
+        
+        for (int i = 0; i < k; i++) {
+            if (result.size() < k) {
+                result.add(0L);
+            }
         }
+        
 
         for (long res : result) {
             sb.append(res + "\n");

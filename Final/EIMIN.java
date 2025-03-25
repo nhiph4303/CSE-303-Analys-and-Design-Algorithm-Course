@@ -11,15 +11,31 @@ public class EIMIN {
         int k = sc.nextInt();
 
         TreeSet<Long> tree = new TreeSet<>();
-        for (int i = 0; i < 0; i++) {
+        for (int i = 0; i < n; i++) {
             tree.add(sc.nextLong());
         }
 
-        ArrayList<Long> list = new ArrayList<>();
         long prev = 0L;
+        List<Long> list = new ArrayList<>();
 
-        for (Long num : tree) {
-            
+        for (long num : tree) {
+            if (list.size() == k) {
+                break;
+            }
+            list.add(num - prev);
+            prev = num;
         }
+
+        for (int i = 0; i < k; i++) {
+            if (list.size() < k) {
+                list.add(0L);
+            }
+        }
+
+        for(long num : list){
+            sb.append(num + "\n");
+        }
+
+        System.out.println(sb);
     }
 }
