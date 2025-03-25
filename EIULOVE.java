@@ -7,14 +7,17 @@ public class EIULOVE {
     public static void main(String[] args) {
         int n = sc.nextInt();
         long money = sc.nextLong();
+        long best = -1;
 
-        TreeSet<Long> prices = new TreeSet<>();
-        for (int i = 0; i < n; i++) {
-            prices.add(sc.nextLong());
+        for (int i = 0; i<n; i++){
+            int gift = sc.nextInt();
+            if (gift <= money && gift > best){
+                best = gift;
+            }
         }
 
-        Long bestGift = prices.floor(money);
-        System.out.println(bestGift == null ? "-1" : bestGift);
+        System.out.println(best);
+        
 
     }
 
