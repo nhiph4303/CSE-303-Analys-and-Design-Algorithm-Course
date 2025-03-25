@@ -12,10 +12,7 @@ public class LOGGING {
         for (int i = 0; i < n; i++) {
             k[i] = sc.nextLong();
         }
-        System.out.print(maxValue(n, k));
-    }
 
-    static long maxValue(int n, long[] k) {
         long[] dp = new long[n + 1];
         dp[0] = 0;
         dp[1] = Math.max(k[0], 0);
@@ -23,8 +20,7 @@ public class LOGGING {
         for (int i = 2; i <= n; i++) {
             dp[i] = Math.max(dp[i - 2] + k[i - 1], dp[i - 1]);
         }
-
-        return dp[n];
+        System.out.print(dp[n]);
     }
 
     static class InputReader {

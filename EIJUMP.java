@@ -13,9 +13,7 @@ public class EIJUMP {
         }
 
         int[] dp = new int[n];
-        for (int i = 0; i < n; i++) {
-            dp[i] = Integer.MAX_VALUE;
-        }
+        Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
 
         Map<Integer, Integer> map = new HashMap<>();
@@ -23,6 +21,7 @@ public class EIJUMP {
         
         for (int i = 1; i < n; i++) {
             dp[i] = dp[i - 1] + 1;
+
             if (map.containsKey(c[i])) {
                 dp[i] = Math.min(dp[i], map.get(c[i]) + 1);
             }

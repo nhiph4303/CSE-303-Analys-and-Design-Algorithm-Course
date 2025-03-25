@@ -12,14 +12,15 @@ public class EIULOGGING2 {
         for (int i = 0; i < n; i++) {
             k[i] = sc.nextLong();
         }
-        System.out.print(maxValue(n, k));
-    }
 
-    static long maxValue(int n, long[] k) {
-        if (n == 1)
-            return Math.max(0, k[0]);
-        if (n == 2)
-            return Math.max(Math.max(0, k[0]), k[1]);
+        if (n == 1) {
+            System.out.print(Math.max(0, k[0]));
+            return;
+        }
+        if (n == 2) {
+            System.out.print(Math.max(Math.max(0, k[0]), k[1]));
+            return;
+        }
 
         long[] dp = new long[n + 1];
         dp[0] = 0;
@@ -30,7 +31,7 @@ public class EIULOGGING2 {
             dp[i] = Math.max(dp[i - 3] + k[i - 1], dp[i - 1]);
         }
 
-        return dp[n];
+        System.out.print(dp[n]);
     }
 
     static class InputReader {

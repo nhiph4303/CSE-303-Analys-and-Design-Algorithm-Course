@@ -4,6 +4,7 @@ import java.util.*;
 public class EIULOGGING3 {
     static InputReader sc = new InputReader(System.in);
     static StringBuilder sb = new StringBuilder();
+    static final int MOD = 1000000007;
 
     public static void main(String[] args) {
         int n = sc.nextInt();
@@ -12,37 +13,30 @@ public class EIULOGGING3 {
         for (int i = 0; i < n; i++) {
             k[i] = sc.nextLong();
         }
-        
-        long[] dp = new long[n];
-        long[] ways = new long[n];
+
+        long[] dp = new long[n + 1];
+        long[] ways = new long[n + 1];
+
+        dp[0] = 0;
+        dp[1] = Math.max(k[0], 0);
+
         ways[0] = 1;
+        ways[1] = 1;
 
-        if (n == 1) {
-            System.out.println(Math.max(0, k[0]) + " 1");
-        } else {
-            ways[1] = 1;
-            dp[0] = Math.max(0, k[0]);
-            if (dp[0] == k[1]) {
-                ways[1] = 2;
+        for (int i = 2; i <= n; i++) {
+            if (dp[i - 1] > dp[i - 2] + k[i - 1]) {
+                dp[i] = dp[i - 1];
+                ways[i] = ways[i - 1];
+            } else if (dp[i - 1] < dp[i - 2] + k[i - 1]) {
+                dp[i] = dp[i - 2] + k[i - 1];
+                ways[i] = ways[i - 2];
+            } else {
+                dp[i] = dp[i - 1];
+                ways[i] = (ways[i - 1] + ways[i - 2]) % MOD;
             }
-            dp[1] = Math.max(dp[0], k[1]);
-
-            for (int i = 2; i < dp.length; i++) {
-                long dp1 = dp[i - 2] + k[i];
-                long dp2 = dp[i - 1];
-                if (dp1 == dp2) {
-                    ways[i] = (ways[i - 2] + ways[i - 1]) % 1_000_000_007;
-                    dp[i] = dp1;
-                } else if (dp1 > dp2) {
-                    ways[i] = ways[i - 2];
-                    dp[i] = dp1;
-                } else {
-                    ways[i] = ways[i - 1];
-                    dp[i] = dp2;
-                }
-            }
-            System.out.println(dp[n - 1] + " " + ways[n - 1] % 1_000_000_007);
         }
+
+        System.out.println(dp[n] + " " + ways[n]);
     }
 
     static class InputReader {
