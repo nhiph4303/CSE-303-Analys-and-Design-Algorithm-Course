@@ -48,6 +48,7 @@ public class EIUQUISORT {
     static void quickSort(double[] numbers, int from, int to) {
         if (from < to) {
             int middle = partition(numbers, from, to);
+
             quickSort(numbers, from, middle - 1);
             quickSort(numbers, middle + 1, to);
         }
@@ -56,6 +57,7 @@ public class EIUQUISORT {
     static int partition(double[] numbers, int from, int to) {
         double pivot = numbers[from];
         int i = from;
+        
         for (int j = i + 1; j <= to; j++) {
             if (numbers[j] < pivot) {
                 i++;

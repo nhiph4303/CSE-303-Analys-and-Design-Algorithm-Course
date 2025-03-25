@@ -15,6 +15,7 @@ public class EISTORE {
         int[] dp = new int[m + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
+        
         for (int num : arr) {
             for (int j = num; j <= m; j++) {
                 if (dp[j - num] != Integer.MAX_VALUE) {

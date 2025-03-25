@@ -12,6 +12,7 @@ public class EIBORE {
             int num = sc.nextInt();
             arr[num] += num;
         }
+        
         long max = 0;
         for (int i = 2; i <= 100000; i++) {
             if (i >= 3) {

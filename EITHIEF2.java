@@ -8,15 +8,18 @@ public class EITHIEF2 {
     public static void main(String[] args) {
         int n = sc.nextInt();
         int p = sc.nextInt();
-        long[] dp = new long[p + 1];
-        Arrays.fill(dp, Integer.MIN_VALUE);
+
         int[] weight = new int[n];
         int[] price = new int[n];
         for (int i = 0; i < n; i++) {
             weight[i] = sc.nextInt();
             price[i] = sc.nextInt();
         }
+
+        long[] dp = new long[p + 1];
+        Arrays.fill(dp, Integer.MIN_VALUE);
         dp[0] = 0;
+        
         for (int i = 0; i < n; i++) {
             for (int j = p; j >= weight[i]; j--) {
                 dp[j] = Math.max(dp[j], dp[j - weight[i]] + price[i]);
