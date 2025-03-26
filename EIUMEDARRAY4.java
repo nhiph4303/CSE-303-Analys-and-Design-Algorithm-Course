@@ -13,7 +13,7 @@ public class EIUMEDARRAY4 {
             long P = sc.nextLong();
             long K = sc.nextLong();
 
-            long[] elements = new long[(int) N];
+            long[] elements = new long[(int)N];
 
             elements[0] = (A * A) % P;
             for (int j = 1; j < N; j++) {
